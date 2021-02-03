@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>ys</title>
+  <title>Archives: 2021/2 | ys</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="ys">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/archives/2021/02/index.html">
 <meta property="og:site_name" content="ys">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="ys">
@@ -148,181 +148,41 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Convolutional Knowledge Tracing Modeling Individualization in Student Learning Process." class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Convolutional-Knowledge-Tracing-Modeling-Individualization-in-Student-Learning-Process"><a href="#Convolutional-Knowledge-Tracing-Modeling-Individualization-in-Student-Learning-Process" class="headerlink" title="Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process."></a>Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process.</h1><p><strong>该文研究的内容：**</strong>知识追踪**，获取学生时刻改变的知识状态，帮助学生更加高效的学习知识概念</p>
-<p><strong>先前研究的不足之处：</strong>仅仅根据学生的交互记录忽视了其独立性【如学生之间的先验知识和学习速率差异】，</p>
-<p><strong>解决方法：</strong></p>
-<p>作者提出卷积知识追踪模型去建模知识追踪中的独立性</p>
-<p>1）从学生的历史行为交互中获取独立性差异</p>
-<p>2）层级的卷积层抽取独立性学习速率基于学生的连续的学习交互</p>
-<img src="知识追踪/CKT.png" alt="image-20210203172021849" style="zoom:50%;" />
-
-<h3 id="模型部分："><a href="#模型部分：" class="headerlink" title="模型部分："></a>模型部分：</h3><p><strong>Embedding:</strong></p>
-<p>M个练习题，练习题的embedding表示${e_{t}}$通过随机初始化得到</p>
-<p>学生回答每个练习题的结果${a_{t}}$以k维的0向量表示</p>
-<p>学生的每个学习交互表示为： 作者将学生的整个学习交互序列称为<strong>LIS</strong><br>$$<br>x_{t}=\left{ \begin{array}{ll}<br>                [e_{t}\oplus a_{t} ] &amp; if \   a_{t}=1, \<br>                [a_{t}\oplus e_{t} ] &amp; if \   a_{t}=0, \end{array} \right.<br>$$<br><strong>Individualized Prior Knowledge  :</strong> 通过学生的历史学习交互得到</p>
-<p><em>1）  Historical Relevant Performance  （HRP）</em></p>
-<p>该组件测量和预测的目标练习相关的历史表现 </p>
-<p>先前回答的练习${e_{i}}$ ( $i \in (1,t-1)$) 和目标练习${e_{t}}$ 之间的相关性系数通过练习之间的softmax得到，其余的非学习序列中的交互直接设置为 负无穷，即：<br>$$<br>\left{<br>\begin{array}{ll}<br>r_{t}(i)=Masking(e_{i} \cdot e_{t}), &amp; i \in (t,N) \<br>w_{t}(i)=Softmax(r_{t}(i)), &amp; i \in (1,N)<br>\end{array}<br>\right.\<br>Softmax(r_{t}(i))=\frac{exp(r_{t}(i))}{\sum_{i=1}^{N}exp(r_{t}(i))}<br>$$<br>之后利用相关性系数$w_{i}$ 通过对所有历史学习交互进行加权求和的方式去测量HRP ：<br>$$<br>HPR_{t}(t)=\sum_{i=1}^{t-1} w_{t}(i)x_{i}<br>$$</p>
-<p><em>2) Concept-wised Percent Correct  (CPC)</em> 统计了学生对于所有知识概念的掌握程度，通过学生对每个知识概念$m$的正确率获得：<br>$$<br>CPC_{t}(m)=\frac{\sum_{i=0}^{t-1}a_{i}^{m}==1}{count(e^m)}<br>$$<br>$e^m$是涉及概念$m$的练习</p>
-<p>进一步地，作者将LIS,HRP,CPC组成矩阵H并输入到门控单元GLU（非线性，在学习过程中控制信息流动）得到矩阵Q：<br>$$<br>\left{ \begin{array}{l} H=LIS \oplus HRP \oplus CPC, \ Q=(H<em>W{1}+b{1} )\otimes \sigma(H</em>W_{2}+b_{2}),\end{array}   \right.<br>$$<br><strong>Individualized Learning rate.</strong></p>
-<p>独立性的学习速率代表学生对于知识的吸收能力，其在一定程度上可以通过学生的学习交互反映出来。那些有着高学习速率的学生可以快速的掌握知识概念而其他学生需要通过多次的尝试和试错才能掌握，作者通过层级的卷积层去从学生的连续的学习交互中抽取学习速率特征。其中层级之间GLU被利用去控制知识在学习的过程中是否会被遗忘。为了加速训练过程，作者在卷积层的输入和输出上添加了残差连接，堆叠的L个相同的卷积层中较低的层捕捉最近一段时间的学习速率较高的层捕捉之前较远时间的学习记录。</p>
-<p>卷积层的输出Z表示学生的知识状态，作者利用点乘将其和目标练习结合预测学生的表现：<br>$$<br>\left{ \begin{array}{l}  y_{t+1}=z_{t}\cdot e_{t+1},\ p_{t+1}=\sigma(y_{t+1})  \end{array}   \right.<br>$$<br>最终使用交叉熵损失函数进行训练：<br>$$<br>L=-\sum_{t=1}^{N}(a_{t}logp_{t}+(1-a_{t})log(1-p_{t}))<br>$$<br>作者在文中并没有声明N代表什么，但整体看下来N应该是总的练习题数目，即M</p>
-<h3 id="实验部分："><a href="#实验部分：" class="headerlink" title="实验部分："></a><strong>实验部分：</strong></h3><p><strong>数据集：</strong>均为开源数据集：</p>
-<img src="知识追踪/dataset1.png" alt="image-20210203203741385" style="zoom:50%;" />
-
-<p><strong>对比方法：</strong></p>
-<p>两个基线方法（DKT/DKVMN),其余为该文章提出方法的相关消融（5个）</p>
-<p><strong>评估指标：</strong></p>
-<p>AUC/准确率（ACC）/皮尔逊系数平方（$r^2$）</p>
-<p><strong>结果分析：</strong></p>
-<p><em>1）整体对比</em></p>
-<img src="知识追踪/res1.png" alt="image-20210203204557761" style="zoom:50%;" />
-
-<ul>
-<li>CKT 和它的变种在4个真实的数据集上均取得了最好的预测效果</li>
-<li>CKT在具有较长学习序列的数据集ASSISTchall 和 Statics2011上取得了较高的提升</li>
-<li>结果证明了CKT在有着较长学习序列即可以提供更多完整的和准确的先验信息的数据上可以建模更好的独立性差异</li>
-<li>Synthetic数据集上仅仅建模独立性的学习速率预测性能大幅度的降低</li>
-</ul>
-<p>【baseline 之间并未进行对比； 在ASSISTchall数据集上CKT-HRP方法比CKT方法效果好并未提及】</p>
-<p><em>2） 知识追踪结果的可视化</em></p>
-<img src="知识追踪/res11.png" alt="image-20210203210102881" style="zoom:50%;" />
-
-<ul>
-<li>上部分是不同练习对应的知识概念 ，</li>
-<li>从图中可以看出CKT可以很好的建模各种学生的独立性的学习速率和先验知识，如学生S1对于概念16和4有较快的学习速率，但是在概念3和29上学习受阻。【总感觉这个从原始数据集上就能得到】</li>
-</ul>
-<p><em>3）练习题的embed ing学习</em></p>
-<img src="知识追踪/res12.png" alt="image-20210203211139600" style="zoom:50%;" />
-
-<ul>
-<li>之前练习题embedding是由专家标注的这耗费了大量的时间和人力，在CKT中练习题的embedding是通过初始化之后在训练的过程中自己学习的</li>
-<li>如图5所示，对于含有相同概念的练习题习题之间的相关系数则偏高而包含不同概念的练习题之间的相关系数则偏低</li>
-</ul>
-<h3 id="结论："><a href="#结论：" class="headerlink" title="结论："></a>结论：</h3><ul>
-<li>提出CKT建模知识追踪任务中学生的独立性</li>
-<li>从历史学习交互中得到学生的独立性先验知识</li>
-<li>从层级卷积层中抽取独立性的学习速率</li>
-<li>实验结果证明了CKT的有效性</li>
-</ul>
-<p>文章的开源代码：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/bigdata-ustc/Convolutional-Knowledge-Tracing">https://github.com/bigdata-ustc/Convolutional-Knowledge-Tracing</a>  </p>
-<p>[1]Shen, Shuanghong, et al. “Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process.” <em>Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval</em>. 2020.</p>
-<p>【个人觉得通过卷积获取学生的学习速率是不必要的，待我再想想…】</p>
-<p>之后可能用到的理论支撑：</p>
-<p>Actually, the prior knowledge and learning rates differ from student to student, which have proved<br>to be of great significance in learning process [16].  </p>
-<p>[16] Michael V Yudelson, Kenneth R Koedinger, and Geoffrey J Gordon. 2013. Individualized bayesian knowledge tracing models. In AIED. Springer, 171–180  </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
+    
       
       
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process./">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+        <div class="archives">
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/14/test/">test</a>
-    </h1>
-  
-
-        
-        <a href="/2021/01/14/test/" class="archive-article-date">
-  	<time datetime="2021-01-14T03:23:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-14</time>
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process./" class="archive-article-date">
+  	<time datetime="2021-02-03T13:40:33.413Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-03</time>
 </a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>20210114</p>
+        </div>
+    	 
+        <div class="article-info info-on-right">
+          
+          
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/14/test/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
+    </div></section>
+  
+
+    
 
 
           </div>
@@ -344,9 +204,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

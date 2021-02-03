@@ -32,7 +32,9 @@
 
   
 
-<meta name="generator" content="Hexo 5.3.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -153,13 +155,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Convolutional-Knowledge-Tracing-Modeling-Individualization-in-Student-Learning-Process"><a href="#Convolutional-Knowledge-Tracing-Modeling-Individualization-in-Student-Learning-Process" class="headerlink" title="Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process."></a>Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process.</h1><p><strong>该文研究的内容：**</strong>知识追踪**，获取学生时刻改变的知识状态，帮助学生更加高效的学习知识概念</p>
+        <h1 id="Convolutional-Knowledge-Tracing-Modeling-Individualization-in-Student-Learning-Process"><a href="#Convolutional-Knowledge-Tracing-Modeling-Individualization-in-Student-Learning-Process" class="headerlink" title="Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process."></a>Convolutional Knowledge Tracing: Modeling Individualization in Student Learning Process.</h1><p><strong>该文研究的内容：知识追踪</strong>，获取学生时刻改变的知识状态，帮助学生更加高效的学习知识概念</p>
 <p><strong>先前研究的不足之处：</strong>仅仅根据学生的交互记录忽视了其独立性【如学生之间的先验知识和学习速率差异】，</p>
 <p><strong>解决方法：</strong></p>
 <p>作者提出卷积知识追踪模型去建模知识追踪中的独立性</p>
 <p>1）从学生的历史行为交互中获取独立性差异</p>
 <p>2）层级的卷积层抽取独立性学习速率基于学生的连续的学习交互</p>
-<img src="知识追踪/CKT.png" alt="image-20210203172021849" style="zoom:50%;" />
+<img src="../figs/CKT.png" alt="image-20210203172021849" style="zoom:50%;" />
 
 <h3 id="模型部分："><a href="#模型部分：" class="headerlink" title="模型部分："></a>模型部分：</h3><p><strong>Embedding:</strong></p>
 <p>M个练习题，练习题的embedding表示${e_{t}}$通过随机初始化得到</p>
@@ -173,7 +175,7 @@
 <p>独立性的学习速率代表学生对于知识的吸收能力，其在一定程度上可以通过学生的学习交互反映出来。那些有着高学习速率的学生可以快速的掌握知识概念而其他学生需要通过多次的尝试和试错才能掌握，作者通过层级的卷积层去从学生的连续的学习交互中抽取学习速率特征。其中层级之间GLU被利用去控制知识在学习的过程中是否会被遗忘。为了加速训练过程，作者在卷积层的输入和输出上添加了残差连接，堆叠的L个相同的卷积层中较低的层捕捉最近一段时间的学习速率较高的层捕捉之前较远时间的学习记录。</p>
 <p>卷积层的输出Z表示学生的知识状态，作者利用点乘将其和目标练习结合预测学生的表现：<br>$$<br>\left{ \begin{array}{l}  y_{t+1}=z_{t}\cdot e_{t+1},\ p_{t+1}=\sigma(y_{t+1})  \end{array}   \right.<br>$$<br>最终使用交叉熵损失函数进行训练：<br>$$<br>L=-\sum_{t=1}^{N}(a_{t}logp_{t}+(1-a_{t})log(1-p_{t}))<br>$$<br>作者在文中并没有声明N代表什么，但整体看下来N应该是总的练习题数目，即M</p>
 <h3 id="实验部分："><a href="#实验部分：" class="headerlink" title="实验部分："></a><strong>实验部分：</strong></h3><p><strong>数据集：</strong>均为开源数据集：</p>
-<img src="知识追踪/dataset1.png" alt="image-20210203203741385" style="zoom:50%;" />
+<img src="../figs/dataset1.png" alt="image-20210203203741385" style="zoom:50%;" />
 
 <p><strong>对比方法：</strong></p>
 <p>两个基线方法（DKT/DKVMN),其余为该文章提出方法的相关消融（5个）</p>
@@ -181,7 +183,7 @@
 <p>AUC/准确率（ACC）/皮尔逊系数平方（$r^2$）</p>
 <p><strong>结果分析：</strong></p>
 <p><em>1）整体对比</em></p>
-<img src="知识追踪/res1.png" alt="image-20210203204557761" style="zoom:50%;" />
+<img src="../figs/res1.png" alt="image-20210203204557761" style="zoom:50%;" />
 
 <ul>
 <li>CKT 和它的变种在4个真实的数据集上均取得了最好的预测效果</li>
@@ -191,14 +193,14 @@
 </ul>
 <p>【baseline 之间并未进行对比； 在ASSISTchall数据集上CKT-HRP方法比CKT方法效果好并未提及】</p>
 <p><em>2） 知识追踪结果的可视化</em></p>
-<img src="知识追踪/res11.png" alt="image-20210203210102881" style="zoom:50%;" />
+<img src="../figs/res11.png" alt="image-20210203210102881" style="zoom:50%;" />
 
 <ul>
 <li>上部分是不同练习对应的知识概念 ，</li>
 <li>从图中可以看出CKT可以很好的建模各种学生的独立性的学习速率和先验知识，如学生S1对于概念16和4有较快的学习速率，但是在概念3和29上学习受阻。【总感觉这个从原始数据集上就能得到】</li>
 </ul>
 <p><em>3）练习题的embed ing学习</em></p>
-<img src="知识追踪/res12.png" alt="image-20210203211139600" style="zoom:50%;" />
+<img src="../figs/res12.png" alt="image-20210203211139600" style="zoom:50%;" />
 
 <ul>
 <li>之前练习题embedding是由专家标注的这耗费了大量的时间和人力，在CKT中练习题的embedding是通过初始化之后在训练的过程中自己学习的</li>

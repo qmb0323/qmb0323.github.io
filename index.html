@@ -152,6 +152,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="screening-Data" class="article article-type-screening  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/05/Data/">Screening for Depressed Individuals by Using Multimodal Social Media Data</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/05/Data/" class="archive-article-date">
+  	<time datetime="2021-02-05T05:19:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h3><ul>
+<li>一个可选择的发现抑郁个体的方法是使用社交数据去训练机器学习模型从而自动的识别</li>
+<li>先前的工作使用机器学习和F-measures去解决这个任务</li>
+<li>该工作展示了通过社交媒体数据将其作为可以利用posts之间时序依赖的多实例学习问题可以更好的建模该问题</li>
+</ul>
+<h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><ul>
+<li>早期使用机器学习方法是使用标注的数据进行训练，之后指出哪些社交行为可能会导致抑郁</li>
+<li>作者先前的工作已经使用多模态信息（图像/文本/图像+文本）碳素抑郁，并创建了对用的数据集，其达到的最好的情况是使用ResNet34抽取后的深度图像特征+ELMo处理后的文本模态达到0.79F-measure，尽管这种方法相比于其它方法已经提升了性能，但是仍然存在一些限制：<ul>
+<li>弱监督学习的多实例学习（MIL）任务可以更好的使用社交媒体动态（posts）<ul>
+<li>MIL方法中，数据以集合的形式划分，包含再集合中的实例时例子的最小单元，训练中只对整个结合进行监督而不是单个的实例。在社交媒体数据集中，用户可以被看作一个集合$P^i$ 伴随着k个动态：$P^i=\{p_{1},…,p_{k}\}$ ,在作者的数据集中作者标注了集合$P^i$ 而没有标注各自的动态实例。  在先前的研究中，研究人员在使用社交媒体数据集时通常：1）将实例的标签设为和集合的标签相同（将用户发布的动态的标签直接设置为该用户的标签） 2）直接使用字符串模式标注动态，之后他们预测单个动态实例$p_{k}^{i}$ 而不是预测用户对应的结果$P^i$,而作者报告的是每个用户的所有动态地平均值因此是用户级别的分数</li>
+</ul>
+</li>
+<li>对于深度学习模型缺乏可解释性<ul>
+<li>为了更好的理解模型的预测，一个关键的任务是发现正在使用哪些信息进行预测。对于此，在最近发布的一篇文章中提出一个机制去屁股古模型的弱点并通过测试多种类型的模板句子作为输入去增强它。但是这种方法太通用不包含我们任务中的心理学属性，此外该方法并没有比较不同微调策略的影响，因此作者提出了一种新的解释方法</li>
+</ul>
+</li>
+<li>先前的方法使用动态作为输入但并没有考虑不同动态之间的时序依赖。<ul>
+<li>受Diagnostic and Statistical Manual of Mental Disorders (精神疾病与统计手册DSM-5) 的启发—精神医师在做最后诊断的时候会考虑患者最近两周的症状，即可以通过利用集合$P^i$的动态之间的层级或者序列的依赖。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="研究目标和结果："><a href="#研究目标和结果：" class="headerlink" title="研究目标和结果："></a>研究目标和结果：</h3><p>使用Transformer去解决当前方法的限制并使用提出的DEPRESSION CHECKLIST进行测试。</p>
+<p>通过使用注意力机制，Transformer可以建模一个集合元素之间的依赖。在MIL设置中，作者喂入一个动态集合$P^i$ ，初始矩阵OKV是该集合中的动态表示：</p>
+<script type="math/tex; mode=display">
+Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}}V)</script><p>在多模态场景中，喂入编码器一种模态的embedding而将另一种模态的embedding作为解码器的输入，通过使用此结构可以建模时序依赖，多模态并使用注意力分数抽取一些限制性的解释。</p>
+<h3 id="贡献："><a href="#贡献：" class="headerlink" title="贡献："></a>贡献：</h3><p>该项目意在使用该方法通过使用AI和社交媒体数据探测早起的抑郁症状，该方法同样适用于解决其它的问题如果它们有以下相同的特征：1）从社交媒体获取的多模态数据 2）一个实例集合组成一个单一的例子 3）例子中存在时序的依赖 </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/05/Data/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-test3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

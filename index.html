@@ -543,14 +543,14 @@ CPC_{t}(m)=\frac{\sum_{i=0}^{t-1}a_{i}^{m}==1}{count(e^m)}</script><p>$e^m$是�
 <script type="math/tex; mode=display">
 L=-\sum_{t=1}^{N}(a_{t}logp_{t}+(1-a_{t})log(1-p_{t}))</script><p>作者在文中并没有声明N代表什么，但整体看下来N应该是总的练习题数目，即M</p>
 <h3 id="实验部分："><a href="#实验部分：" class="headerlink" title="实验部分："></a><strong>实验部分：</strong></h3><p><strong>数据集：</strong>均为开源数据集：</p>
-<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./figs/dataset1.png" alt="image-20210203203741385" style="zoom:50%;"></p>
+<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./dataset1.png" alt="image-20210203203741385" style="zoom:50%;"></p>
 <p><strong>对比方法：</strong></p>
 <p>两个基线方法（DKT/DKVMN),其余为该文章提出方法的相关消融（5个）</p>
 <p><strong>评估指标：</strong></p>
 <p>AUC/准确率（ACC）/皮尔逊系数平方（$r^2$）</p>
 <p><strong>结果分析：</strong></p>
 <p><em>1）整体对比</em></p>
-<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./figs/res1.png" alt="image-20210203204557761" style="zoom:50%;"></p>
+<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./res1.png" alt="image-20210203204557761" style="zoom:50%;"></p>
 <ul>
 <li>CKT 和它的变种在4个真实的数据集上均取得了最好的预测效果</li>
 <li>CKT在具有较长学习序列的数据集ASSISTchall 和 Statics2011上取得了较高的提升</li>
@@ -559,13 +559,13 @@ L=-\sum_{t=1}^{N}(a_{t}logp_{t}+(1-a_{t})log(1-p_{t}))</script><p>作者在文�
 </ul>
 <p>【baseline 之间并未进行对比； 在ASSISTchall数据集上CKT-HRP方法比CKT方法效果好并未提及】</p>
 <p><em>2） 知识追踪结果的可视化</em></p>
-<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./figs/res11.png" alt="image-20210203210102881" style="zoom:50%;"></p>
+<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./res11.png" alt="image-20210203210102881" style="zoom:50%;"></p>
 <ul>
 <li>上部分是不同练习对应的知识概念 ，</li>
 <li>从图中可以看出CKT可以很好的建模各种学生的独立性的学习速率和先验知识，如学生S1对于概念16和4有较快的学习速率，但是在概念3和29上学习受阻。【总感觉这个从原始数据集上就能得到】</li>
 </ul>
 <p><em>3）练习题的embed ing学习</em></p>
-<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./figs/res12.png" alt="image-20210203211139600" style="zoom:50%;"></p>
+<p><img src="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./res12.png" alt="image-20210203211139600" style="zoom:50%;"></p>
 <ul>
 <li>之前练习题embedding是由专家标注的这耗费了大量的时间和人力，在CKT中练习题的embedding是通过初始化之后在训练的过程中自己学习的</li>
 <li>如图5所示，对于含有相同概念的练习题习题之间的相关系数则偏高而包含不同概念的练习题之间的相关系数则偏低</li>
@@ -596,69 +596,6 @@ L=-\sum_{t=1}^{N}(a_{t}logp_{t}+(1-a_{t})log(1-p_{t}))</script><p>作者在文�
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/02/03/Convolutional%20Knowledge%20Tracing%20Modeling%20Individualization%20in%20Student%20Learning%20Process1./">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/14/test/">test</a>
-    </h1>
-  
-
-        
-        <a href="/2021/01/14/test/" class="archive-article-date">
-  	<time datetime="2021-01-14T03:23:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>20210114</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/14/test/">展开全文 >></a>
         </p>
       
 
